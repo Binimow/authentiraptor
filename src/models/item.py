@@ -1,15 +1,15 @@
-from authentication.models.item_schema import ItemBase
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from infrastructure.database import Base
 
 
-class Item(ItemBase):
-    __tablename__ = "items"
+class PermissionModel(Base):
+    __tablename__ = "permissions"
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
     description = Column(String, index=True)
     owner_id = Column(Integer, ForeignKey("users.id"))
+    test = Column(String)
 
-    owner = relationship("User", back_populates="items")
+    owner = relationship("UserModel", back_populates="permissions")
