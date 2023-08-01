@@ -1,15 +1,23 @@
 from fastapi import FastAPI
-
+from fastapi.middleware.cors import CORSMiddleware
 from services.user.user_controller import user_router
-from services.authentication.authentication_controller import authentication_router
+from services.authorization.authorization_controller import authorization_router
 from services.client.client_controller import client_router
 
 from infrastructure.database import Base, engine
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
 app.include_router(user_router)
-app.include_router(authentication_router)
+app.include_router(authorization_router)
 app.include_router(client_router)
 
 # @app.get("/users/", response_model=list[schemas.User])

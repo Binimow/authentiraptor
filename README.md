@@ -25,3 +25,19 @@ Access Token Example
 }
 ```
 
+We will aim to integrate the Authorization Code flow for this example.
+[Reference](https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow)
+![Alt text](readme_pictures/authorization_code_flow.png)
+
+Here is the IP used for local development:
+db: localhost:5432
+authorization_server_api: localhost:8000
+authorization_server_ui: localhost:4201
+resource_server: localhost:8002
+client_ui: localhost:4200
+client_api: localhost:8003
+
+TODO NEXT (8/1/2023)
+The the Regular Web App now makes a call to the authorization_server. Now, the authorization server needs to serve a UI
+for the user authentication. This is the first tricky part. I will need to make a new UI, create authentication, and check
+if the user that gave it's consent has the SCOPE permission required by the authorization_code

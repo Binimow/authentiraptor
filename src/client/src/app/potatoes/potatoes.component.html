@@ -1,0 +1,11 @@
+<div>
+    <h1>Potato Farm</h1>
+    <button (click)="getPotatoList()">
+        Access all potatoes
+    </button>
+    <ul>
+        <li *ngFor="let potato of potatoes">
+            <p>{{potato.name}}</p>
+        </li>
+    </ul>
+</div>
