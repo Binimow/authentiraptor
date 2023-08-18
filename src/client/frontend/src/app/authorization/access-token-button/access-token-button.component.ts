@@ -14,8 +14,6 @@ export class GetAccessTokenComponent {
   }
 
   getAuthorizationCode() {
-    this.authorizationService.getAuthorizationCode().subscribe(authorizationCode => {
-      console.log(authorizationCode);
-    })
+    this.authorizationService.getAuthorizationCode()
   }
 }

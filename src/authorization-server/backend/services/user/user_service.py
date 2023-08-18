@@ -2,9 +2,10 @@ from sqlalchemy import insert, select
 from sqlalchemy.orm import Session
 
 from models.user import UserModel
-from models.item import PermissionModel
+from models.permission import PermissionModel
 from schemas.user import UserCreateSchema
 from schemas.permission import PermissionCreateSchema
+import hashlib
 
 # stmt stands for statement
 
@@ -24,8 +25,8 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
 
 
 def create_user(db: Session, user: UserCreateSchema):
-    fake_hashed_password = user.password + "notreallyhashed"
-    db_user = UserModel(email=user.email, hashed_password=fake_hashed_password)
+    hashed_password = hash_password(user.password)
+    db_user = UserModel(email=user.email, hashed_password=hashed_password)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -42,3 +43,15 @@ def create_user_item(db: Session, item: PermissionCreateSchema, user_id: int):
     db.commit()
     db.refresh(db_item)
     return db_item
+
+def hash_password(password: str):
+    return hashlib.sha3_256(password.encode('utf-8')).hexdigest()
+
+def verify_password(password: str, hashed_password: str):
+    return hash_password(password) == hashed_password
+
+def verify_login(db: Session, email: str, password: str):
+    user = get_user_by_email(db, email)
+    if user is None:
+        return False
+    return verify_password(password, user.hashed_password)

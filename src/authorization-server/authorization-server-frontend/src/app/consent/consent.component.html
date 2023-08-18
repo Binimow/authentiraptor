@@ -1,0 +1,9 @@
+<p> Application <span style="font-weight: bold;"> {{authorizationCodeService.clientId}} </span> wants access to</p>
+<ul>
+  <li *ngFor="let scope of authorizationCodeService.scope">
+    {{scope}}
+  </li>
+</ul>
+<p> Do you want to give the application the specified access? </p>
+<button style="background-color: green;" (click)="consentGiven()"> Yes </button> 
+<button style="background-color: red;"> No </button>

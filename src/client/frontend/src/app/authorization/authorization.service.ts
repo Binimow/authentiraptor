@@ -11,16 +11,15 @@ export class AuthorizationService {
   constructor(
     private http: HttpClient
   ) {
-
+    this.setClientId();
   }
 
   setClientId() {
-    this.http.get<{clientId: string}>(
+    this.http.get<string>(
       "/assets/client_id.json"
-    ).subscribe(
-      (data: {clientId: string}) => {
-        console.log(data);
-        this.clientId = this.clientId
+    )
+      .subscribe(data => {
+        this.clientId = data
       }
     );
   }
@@ -29,11 +28,12 @@ export class AuthorizationService {
     if (!this.clientId.length) {
       this.setClientId();
     }
-    return this.http.post("http://localhost:8000/pre_getauthorizationcode", {
-      client_id: this.clientId,
-      response_type: "code",
-      redirect_uri: "http://localhost:4200/authorization",
-      scopes: ["potatoes_read"],    
-    })
+    window.location.href = `http://localhost:4201/authorize?client_id=${this.clientId}&response_type=code&redirect_uri=http://localhost:4200&scope=potatoes_read`
+    // return this.http.post("http://localhost:8000/authorization-code", {
+    //   client_id: this.clientId,
+    //   response_type: "code",
+    //   redirect_uri: "http://localhost:4200/authorization",
+    //   scope: ["potatoes_read"],    
+    // })
   }
 }
