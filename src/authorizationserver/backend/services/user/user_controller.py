@@ -23,6 +23,12 @@ def login(user: UserLoginSchema, db: SessionLocal = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Incorrect password")
     return db_user
 
+@user_router.put("/addpermission", response_model=UserSchema)
+def add_user_permission(user_id: int, permission_id: int, db: SessionLocal = Depends(get_db)):
+    db_user = user_service.get_user(db, user_id=user_id)
+    if not db_user:
+        raise HTTPException(status_code=400, detail="User id not registered")
+
 @user_router.post("/create/", response_model=UserSchema)
 def create_user(user: UserCreateSchema, db: SessionLocal = Depends(get_db)):
     db_user = user_service.get_user_by_email(db, email=user.email)

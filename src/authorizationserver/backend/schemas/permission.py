@@ -11,7 +11,6 @@ class PermissionCreateSchema(PermissionBaseSchema):
 
 class PermissionSchema(PermissionBaseSchema):
     id: int
-    owner_id: int
 
     class Config:
         orm_mode = True

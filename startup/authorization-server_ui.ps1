@@ -1,2 +1,3 @@
-Set-Location .\src\authorization-server\authorization-server-frontend
+Set-Location .\src\authorizationserver\authorization-server-frontend
+npm i
 npm run start

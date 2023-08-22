@@ -37,12 +37,13 @@ def get_items(db: Session, skip: int = 0, limit: int = 100):
     return db.query(PermissionModel).offset(skip).limit(limit).all()
 
 
-def create_user_item(db: Session, item: PermissionCreateSchema, user_id: int):
-    db_item = PermissionModel(**item.model_dump(), owner_id=user_id)
-    db.add(db_item)
-    db.commit()
-    db.refresh(db_item)
-    return db_item
+# def create_permission(db: Session, item: PermissionCreateSchema, user_id: int):
+#     db_item = PermissionModel(**item.model_dump(), owner_id=user_id)
+#     db.add(db_item)
+#     db.commit()
+#     db.refresh(db_item)
+#     return db_item
+
 
 def hash_password(password: str):
     return hashlib.sha3_256(password.encode('utf-8')).hexdigest()

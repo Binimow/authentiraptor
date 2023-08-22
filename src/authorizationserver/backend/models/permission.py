@@ -1,5 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+from models.user import UserModel
 from infrastructure.database import Base
 
 
@@ -9,7 +10,7 @@ class PermissionModel(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
     description = Column(String, index=True)
-    owner_id = Column(Integer, ForeignKey("users.id"))
-    test = Column(String)
-
-    owner = relationship("UserModel", back_populates="permissions")
+    users = relationship(
+        "UserModel",
+        secondary="user_permission"
+    )
