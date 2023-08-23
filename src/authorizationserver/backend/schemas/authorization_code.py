@@ -9,11 +9,11 @@ class AuthorizationCodeRequestCreateSchema(BaseModel):
     client_id: str
     # redirect_uri: str
     # response_type: str
-    expire_on: datetime.datetime
     scope: list[str]
 
 class AuthorizationCodeRequestGetSchema(BaseModel):
     client_id: str
+    code: str
     # redirect_uri: str
     # response_type: str
     expire_on: datetime.datetime

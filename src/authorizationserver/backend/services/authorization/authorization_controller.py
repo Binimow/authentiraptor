@@ -29,7 +29,7 @@ def get_authorization_code(authorization_code_request: AuthorizationCodeRequestC
     authorizationcode_dto = AuthorizationCodeRequestGetSchema(
         client_id=authorizationcode_db.client_id,
         expire_on=authorizationcode_db.expire_on,
-        scope=[permission.title for permission in authorizationcode_db.scope]
+        scope=[permission.title for permission in authorizationcode_db.scope],
+        code=authorizationcode_db.code
     )
-    print(f"{authorizationcode_dto.__dict__}")
     return authorizationcode_dto
