@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from services.permission.permission_service import get_permission
 
 from schemas.user import UserCreateSchema, UserSchema, UserLoginSchema
 from . import user_service
@@ -28,6 +29,11 @@ def add_user_permission(user_id: int, permission_id: int, db: SessionLocal = Dep
     db_user = user_service.get_user(db, user_id=user_id)
     if not db_user:
         raise HTTPException(status_code=400, detail="User id not registered")
+    permission_db = get_permission(db=db, id=permission_id)
+    if not permission_db:
+        raise HTTPException(status_code=400, detail="Permission id not registered")
+    user = user_service.assign_permission(db=db, user_id=user_id, permission_id=permission_id)
+    return user
 
 @user_router.post("/create/", response_model=UserSchema)
 def create_user(user: UserCreateSchema, db: SessionLocal = Depends(get_db)):

@@ -28,7 +28,7 @@ export class AuthorizationService {
     if (!this.clientId.length) {
       this.setClientId();
     }
-    window.location.href = `http://localhost:4201/authorize?client_id=${this.clientId}&response_type=code&redirect_uri=http://localhost:4200&scope=potatoes_read`
+    window.location.href = `http://localhost:4201/authorize?client_id=${this.clientId}&response_type=code&redirect_uri=http://localhost:4200&scope=read_potatoes`
     // return this.http.post("http://localhost:8000/authorization-code", {
     //   client_id: this.clientId,
     //   response_type: "code",

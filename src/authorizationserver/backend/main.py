@@ -3,8 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from services.user.user_controller import user_router
 from services.authorization.authorization_controller import authorization_router
 from services.client.client_controller import client_router
+from services.permission.permission_controller import permission_router
 
-from infrastructure.database import Base, engine
+from infrastructure.database import Base
 
 app = FastAPI()
 
@@ -19,6 +20,7 @@ app.add_middleware(
 app.include_router(user_router)
 app.include_router(authorization_router)
 app.include_router(client_router)
+app.include_router(permission_router)
 
 # @app.get("/users/", response_model=list[schemas.User])
 # def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):

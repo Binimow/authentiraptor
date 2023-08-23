@@ -1,5 +1,6 @@
 from sqlalchemy import insert, select
 from sqlalchemy.orm import Session
+from services.permission.permission_service import get_permission
 
 from models.user import UserModel
 from models.permission import PermissionModel
@@ -12,7 +13,7 @@ import hashlib
 def get_user(db: Session, user_id: int):
     return db.execute(
         select(UserModel).where(UserModel.id == user_id)
-    ).scalars().all()
+    ).scalars().first()
 
 def get_user_by_email(db: Session, email: str):
     user_by_email_stmt = select(UserModel).where(UserModel.email == email)
@@ -36,6 +37,18 @@ def create_user(db: Session, user: UserCreateSchema):
 def get_items(db: Session, skip: int = 0, limit: int = 100):
     return db.query(PermissionModel).offset(skip).limit(limit).all()
 
+def assign_permission(db: Session, user_id: int, permission_id: int):
+    user_db = get_user(db=db, user_id=user_id)
+    if not user_db:
+        raise Exception("user not found")
+    permission_db = get_permission(db=db, id=permission_id)
+    if not permission_db:
+        raise Exception("permission not found")
+    user_db.permissions.append(permission_db)
+    db.add(user_db)
+    db.commit()
+    db.refresh(user_db)
+    return user_db
 
 # def create_permission(db: Session, item: PermissionCreateSchema, user_id: int):
 #     db_item = PermissionModel(**item.model_dump(), owner_id=user_id)

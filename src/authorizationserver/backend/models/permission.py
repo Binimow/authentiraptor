@@ -14,3 +14,7 @@ class PermissionModel(Base):
         "UserModel",
         secondary="user_permission"
     )
+    # authorization_codes = relationship(
+    #     "AuthorizationCodeModel",
+    #     secondary="authorizationcode_permission"
+    # )

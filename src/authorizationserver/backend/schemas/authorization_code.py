@@ -1,10 +1,20 @@
+import datetime
+from sqlalchemy import DateTime
 from schemas.user import UserLoginSchema
 from pydantic import BaseModel
 
 
-class AuthorizationCodeRequestBaseSchema(BaseModel):
+class AuthorizationCodeRequestCreateSchema(BaseModel):
     user: UserLoginSchema
     client_id: str
-    redirect_uri: str
-    response_type: str
+    # redirect_uri: str
+    # response_type: str
+    expire_on: datetime.datetime
+    scope: list[str]
+
+class AuthorizationCodeRequestGetSchema(BaseModel):
+    client_id: str
+    # redirect_uri: str
+    # response_type: str
+    expire_on: datetime.datetime
     scope: list[str]
